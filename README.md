@@ -24,3 +24,11 @@ emulators.
 ./runner.py "elk %s" -q
 ./runner.py "lcc %s -o %o" "%o" -q
 ```
+
+## Test semantics
+
+- Tests under `./tests/asm-errors/` are expected to fail to assemble such as
+  invalid syntax.
+- Tests named like `*_crash.asm` are expected to crash at runtime usually from
+  ACV.
+- Tests must emit "TEST_PASSED" to pass.
