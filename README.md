@@ -52,6 +52,6 @@ steps:
     # run test suite on ./zig-out/bin/elk
     - uses: twhlynch/lc3-test-suite@v1
       with:
-          assemble: "./zig-out/bin/elk %s --assemble --output %o"
-          emulate: "./zig-out/bin/elk %o --emulate"
+          assemble: "$GITHUB_WORKSPACE/zig-out/bin/elk %s --assemble --output %o"
+          emulate: "$GITHUB_WORKSPACE/zig-out/bin/elk %o --emulate"
 ```
