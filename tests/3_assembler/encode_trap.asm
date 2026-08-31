@@ -1,5 +1,5 @@
 ; trap instruction encoding must match
-; 1101 0000 trapvec8
+; 1111 0000 trapvec8
 
 .ORIG x3000
 
@@ -29,13 +29,13 @@
 
     br Pass
 
-           ; 1101 0000 00000000
+           ; 1111 0000 00000000
 Instruction1 trap      x0
-Encoding1 .FILL xD000
+Encoding1 .FILL xF000
 
-           ; 1101 0000 00100101
+           ; 1111 0000 00100101
 Instruction2 trap      x25
-Encoding2 .FILL xD025
+Encoding2 .FILL xF025
 
 Fail
     lea r0, FailMsg

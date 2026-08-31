@@ -29,13 +29,13 @@
 
     br Pass
 
-           ; 0010 000 100000000
+           ; 0010 000 111111111
 Instruction1 ld   r0, Instruction1
-Encoding1 .FILL x2100
+Encoding1 .FILL x21FF
 
-           ; 0010 110 100000011
+           ; 0010 110 111111101
 Instruction2 ld   r6, Instruction1
-Encoding2 .FILL x2D03
+Encoding2 .FILL x2DFD
 
 Fail
     lea r0, FailMsg

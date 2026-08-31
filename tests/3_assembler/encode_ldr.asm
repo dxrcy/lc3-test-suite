@@ -31,11 +31,11 @@
 
            ; 0110 000 000 000000
 Instruction1 ldr  r0, r0, #0
-Encoding1 .FILL x6CD9
+Encoding1 .FILL x6000
 
            ; 0110 110 011 011001
 Instruction2 ldr  r6, r3, #25
-Encoding2 .FILL x6000
+Encoding2 .FILL x6CD9
 
 Fail
     lea r0, FailMsg

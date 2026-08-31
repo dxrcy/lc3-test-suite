@@ -29,13 +29,13 @@
 
     br Pass
 
-           ; 0100 1 10000000001
+           ; 0100 1 11111111111
 Instruction1 jsr    Instruction1
-Encoding1 .FILL x4C01
+Encoding1 .FILL x4FFF
 
-           ; 0100 1 10000000011
+           ; 0100 1 11111111101
 Instruction2 jsr    Instruction1
-Encoding2 .FILL x4C03
+Encoding2 .FILL x4FFD
 
 Fail
     lea r0, FailMsg

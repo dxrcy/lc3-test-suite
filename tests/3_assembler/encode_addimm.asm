@@ -35,7 +35,7 @@ Encoding1 .FILL x1020
 
            ; 0001 010 101 1 01101
 Instruction2 add  r2, r5,   #13
-Encoding2 .FILL x102D
+Encoding2 .FILL x156D
 
 Fail
     lea r0, FailMsg
