@@ -27,7 +27,7 @@ def run_command(command: str) -> tuple[bool, int, str]:
             command, shell=True, capture_output=True, text=True, timeout=30
         )
         return False, r.returncode, r.stdout + r.stderr
-    except BaseException:
+    except Exception:
         return True, 1, ""
 
 
