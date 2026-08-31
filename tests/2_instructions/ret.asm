@@ -3,6 +3,13 @@
 .ORIG x3000
 
     jsr Sub
+
+    lea r7, Jump
+    ret
+
+    br Fail
+
+Jump
     jsr Pass
 
 Sub
