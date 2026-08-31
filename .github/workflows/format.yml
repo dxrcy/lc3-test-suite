@@ -1,0 +1,20 @@
+name: Format
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Run format
+        run: ./format.sh
+
+      - name: Check for diff
+        run: git diff --exit-code
