@@ -28,14 +28,14 @@
     ; both passed
 
     br Pass
-;TODO:
-           ; 0000000000000000
-Instruction1 add r0, r0, r0
-Encoding1 .FILL x0000
 
-           ; 0000000000000000
-Instruction2 add r1, r2, r3
-Encoding2 .FILL x0000
+           ; 1001 000 000 111111
+Instruction1 not  r0, r0
+Encoding1 .FILL x903F
+
+           ; 1001 111 011 111111
+Instruction2 not  r7, r3
+Encoding2 .FILL x9EFF
 
 Fail
     lea r0, FailMsg

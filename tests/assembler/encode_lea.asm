@@ -1,5 +1,5 @@
 ; lea instruction encoding must match
-; 1110 DR1 BR1 offst6
+; 1110 DR1 PCoffset9
 
 .ORIG x3000
 
@@ -28,14 +28,14 @@
     ; both passed
 
     br Pass
-;TODO:
-           ; 0000000000000000
-Instruction1 add r0, r0, r0
-Encoding1 .FILL x0000
 
-           ; 0000000000000000
-Instruction2 add r1, r2, r3
-Encoding2 .FILL x0000
+           ; 1110 000 100000000
+Instruction1 lea  r0, Instruction1
+Encoding1 .FILL xE100
+
+           ; 1110 111 100000011
+Instruction2 lea  r7, Instruction1
+Encoding2 .FILL xEF03
 
 Fail
     lea r0, FailMsg

@@ -15,27 +15,11 @@
 
     ; first passed
 
-    ld r0, Instruction2
-    ld r1, Encoding2
-
-    add r2, r1, #0
-    not r2, r2
-    add r2, r2, #1
-
-    add r3, r0, r2 ; instruction - encoding
-    brnp Fail
-
-    ; both passed
-
     br Pass
-;TODO:
-           ; 0000000000000000
-Instruction1 add r0, r0, r0
-Encoding1 .FILL x0000
 
-           ; 0000000000000000
-Instruction2 add r1, r2, r3
-Encoding2 .FILL x0000
+           ; 1100 000 111 000000
+Instruction1 ret
+Encoding1 .FILL xC1C0
 
 Fail
     lea r0, FailMsg
