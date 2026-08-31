@@ -27,6 +27,3 @@ PassMsg .STRINGZ "TEST_PASSED"
 FailMsg .STRINGZ "TEST_FAILED"
 
 .END
-
-
-

@@ -10,4 +10,3 @@ FarLabel .FILL #0
     jsr FarLabel
 
 .END
-

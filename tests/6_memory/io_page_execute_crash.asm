@@ -18,4 +18,3 @@ SupAddr .FILL xFDFF
 FailMsg .STRINGZ "TEST_FAILED"
 
 .END
-
