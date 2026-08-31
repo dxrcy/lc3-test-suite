@@ -1,0 +1,30 @@
+name: "LC-3 Test Suite"
+description: "Run the LC-3 test suite against an assembler/emulator"
+
+inputs:
+  assemble:
+    description: "Assemble command template (%s = source file, %o = output file)"
+    required: true
+  emulate:
+    description: "Emulate command template (%s = source file, %o = output file)"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout test suite
+      uses: actions/checkout@v7
+      with:
+        repository: twhlynch/lc3-test-suite
+        path: _lc3-test-suite
+
+    - name: Set up Python
+      uses: actions/setup-python@v7
+      with:
+        python-version: "3.x"
+
+    - name: Run tests
+      shell: bash
+      run: |
+        cd "$GITHUB_WORKSPACE/_lc3-test-suite"
+        python3 runner.py -q "${{ inputs.assemble }}" "${{ inputs.emulate && inputs.emulate || '' }}"

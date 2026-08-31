@@ -33,3 +33,25 @@ emulators.
 - Tests named like `*_crash.asm` are expected to crash at runtime usually from
   ACV.
 - Tests must emit "TEST_PASSED" to pass.
+
+## GitHub Actions
+
+This repo can be used as a GitHub Action to test your LC-3 toolchain in CI.
+For example, for [ELK](https://github.com/dxrcy/elk):
+
+```yaml
+steps:
+    # checkout, build, etc
+    - uses: actions/checkout@v7
+    - uses: mlugg/setup-zig@v2
+      with:
+          version: 0.16.0
+    - name: Build binary
+      run: zig build
+
+    # run test suite on ./zig-out/bin/elk
+    - uses: twhlynch/lc3-test-suite@v1
+      with:
+          assemble: "./zig-out/bin/elk %s --assemble --output %o"
+          emulate: "./zig-out/bin/elk %o --emulate"
+```
