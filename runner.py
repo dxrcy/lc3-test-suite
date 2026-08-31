@@ -58,7 +58,7 @@ def run_test(
     if os.path.exists(obj):
         os.remove(obj)
 
-    expect_asm_fail = "/asm-errors/" in filepath
+    expect_asm_fail = "/1_syntax/" in filepath
     expect_crash = filepath.endswith("_crash.asm")
     has_pass = "TEST_PASSED" in output
     has_fail = "TEST_FAILED" in output

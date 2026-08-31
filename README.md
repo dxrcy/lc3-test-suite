@@ -27,7 +27,7 @@ emulators.
 
 ## Test semantics
 
-- Tests under `./tests/asm-errors/` are expected to fail to assemble such as
+- Tests under `./tests/1_syntax/` are expected to fail to assemble such as
   invalid syntax.
 - Tests named like `*_crash.asm` are expected to crash at runtime usually from
   ACV.
