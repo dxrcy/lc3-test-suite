@@ -1,4 +1,4 @@
-; .ORIG in supervisor memory x0200 should not assemble
+; .ORIG in supervisor memory x0200 should crash
 
 .ORIG x0200
 
