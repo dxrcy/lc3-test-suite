@@ -2,6 +2,8 @@
 
 .ORIG x3000
 
+    halt
+
     and r0, r0, #16
 
 .END

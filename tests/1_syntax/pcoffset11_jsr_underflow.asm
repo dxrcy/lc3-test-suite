@@ -2,6 +2,8 @@
 
 .ORIG x3000
 
+    halt
+
 FarLabel .FILL #0
          .BLKW #1023
 

@@ -2,6 +2,8 @@
 
 .ORIG x3000
 
+    halt
+
     ld r0, NonExistentLabel
 
 .END

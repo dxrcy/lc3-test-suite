@@ -2,6 +2,8 @@
 
 .ORIG x3000
 
+    halt
+
     trap #256
 
 .END

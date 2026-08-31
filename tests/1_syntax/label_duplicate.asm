@@ -2,6 +2,8 @@
 
 .ORIG x3000
 
+    halt
+
 Label .FILL #1
 Label .FILL #1
 

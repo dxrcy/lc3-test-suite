@@ -2,6 +2,8 @@
 
 .ORIG x3000
 
+    halt
+
     st r0, FarLabel
 
          .BLKW #256
