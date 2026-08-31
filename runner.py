@@ -53,7 +53,12 @@ def run_test(
         cmd = format_command(assemble_cmd, filepath, obj)
 
     crashed, return_code, output = run_command(cmd)
-    failed = crashed or return_code != 0
+    failed = (
+        crashed
+        or return_code != 0
+        or "error" in output.lower()
+        or "exception" in output.lower()
+    )
 
     if os.path.exists(obj):
         os.remove(obj)
