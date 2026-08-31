@@ -21,8 +21,9 @@ emulators.
 
 ```sh
 ./runner.py "elk %s --assemble --output %o" "elk %o --emulate"
-./runner.py "elk %s" -q
+./runner.py "lace compile %s %o" "lace run %o" -q
 ./runner.py "lcc %s -o %o" "%o" -q
+./runner.py "elk %s" -q
 ```
 
 ## Test semantics
