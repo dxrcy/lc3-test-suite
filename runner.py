@@ -96,7 +96,7 @@ def parse_args(args: list[str]) -> tuple[str, str | None, bool]:
     if len(args) == 1:
         return args[0], None, quiet
     else:
-        return args[0], args[1], quiet
+        return args[0], args[1] or None, quiet
 
 
 COLORS = {"pass": "\033[32m", "fail": "\033[31m", "crash": "\033[33m"}
