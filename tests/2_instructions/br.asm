@@ -11,14 +11,15 @@
     add r0, r0, #-2
     brzp Fail
 
-    ; pass
-
-    lea r0, PassMsg
-    puts
-    halt
+    br Pass
 
 Fail
     lea r0, FailMsg
+    puts
+    halt
+
+Pass
+    lea r0, PassMsg
     puts
     halt
 
