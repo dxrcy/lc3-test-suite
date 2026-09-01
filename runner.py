@@ -11,6 +11,7 @@ LC-3 Test Suite Runner
 
 import glob
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -56,7 +57,7 @@ def run_test(
     failed = (
         crashed
         or return_code != 0
-        or "error" in output.lower()
+        or re.search(r"$error", output.lower())
         or "exception" in output.lower()
     )
 
@@ -72,12 +73,16 @@ def run_test(
     if has_fail:
         return "fail"
 
-    if expect_parse_only and not (assemble_failed or (not two_step and failed)):
+    if expect_parse_only and (not assemble_failed or (not two_step and not failed)):
         return "pass"
-    if expect_asm_fail and (assemble_failed or (not two_step and failed)):
-        return "pass"
-    if expect_crash and failed and not assemble_failed:
-        return "pass"
+    if expect_asm_fail:
+        if assemble_failed or (not two_step and failed):
+            return "pass"
+        return "fail"
+    if expect_crash:
+        if failed and not assemble_failed:
+            return "pass"
+        return "fail"
     if has_pass:
         return "pass"
 
