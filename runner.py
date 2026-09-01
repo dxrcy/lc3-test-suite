@@ -64,6 +64,7 @@ def run_test(
         os.remove(obj)
 
     expect_asm_fail = "/1_syntax/" in filepath
+    expect_parse_only = "/0_parsing/" in filepath
     expect_crash = filepath.endswith("_crash.asm")
     has_pass = "TEST_PASSED" in output
     has_fail = "TEST_FAILED" in output
@@ -71,6 +72,8 @@ def run_test(
     if has_fail:
         return "fail"
 
+    if expect_parse_only and not (assemble_failed or (not two_step and failed)):
+        return "pass"
     if expect_asm_fail and (assemble_failed or (not two_step and failed)):
         return "pass"
     if expect_crash and failed and not assemble_failed:
