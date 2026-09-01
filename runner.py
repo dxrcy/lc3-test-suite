@@ -83,7 +83,7 @@ def run_test(
         if failed and not assemble_failed:
             return "pass"
         return "fail"
-    if has_pass:
+    if has_pass and not (assemble_failed or (not two_step and failed)):
         return "pass"
 
     if crashed:
