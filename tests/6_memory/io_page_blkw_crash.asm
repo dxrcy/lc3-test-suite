@@ -1,4 +1,4 @@
-; .BLKW emitting past xFE00 should fail to assemble
+; .BLKW emitting past xFE00 should crash
 
 .ORIG x3000
 
