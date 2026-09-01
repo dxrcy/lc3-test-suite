@@ -24,6 +24,8 @@ emulators.
 ./runner.py "lace compile %s %o" "lace run %o" -q
 ./runner.py "lcc %s -o %o" "%o" -q
 ./runner.py "elk %s" -q
+# test an assembler/parser without an emulator
+./runner.py "laser -a %s" "echo TEST_PASSED && [[ '%s' == *_crash.asm ]] && return 1" -q
 ```
 
 ## Test semantics
