@@ -3,7 +3,7 @@
 .ORIG x3000
 
     ld r0, Instr
-    st r0 Dst
+    st r0, Dst
 Dst
     br Fail   ; becomes and instruction
     brnp Fail ; check it set r1 to 0
