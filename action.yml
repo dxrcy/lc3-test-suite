@@ -8,6 +8,10 @@ inputs:
   emulate:
     description: "Emulate command template (%s = source file, %o = output file)"
     required: false
+  extensions:
+    description: "Run tests for extension features ('true' or 'false')"
+    required: true
+    default: "true"
 
 runs:
   using: "composite"
@@ -27,4 +31,4 @@ runs:
       shell: bash
       run: |
         cd "$GITHUB_WORKSPACE/_lc3-test-suite"
-        python3 runner.py -q "${{ inputs.assemble }}" "${{ inputs.emulate && inputs.emulate || '' }}"
+        python3 runner.py -q "${{ inputs.assemble }}" "${{ inputs.emulate && inputs.emulate || '' }}" "${{ inputs.extensions == 'true' && '-e' || '' }}"
