@@ -135,20 +135,24 @@ def main():
 
     results = {"pass": 0, "fail": 0, "crash": 0}
 
-    for file in files:
-        if not os.path.isfile(file):
-            continue
+    try:
+        for file in files:
+            if not os.path.isfile(file):
+                continue
 
-        result = run_test(file, assemble_cmd, emulate_cmd, extensions)
-        if result is None:
-            continue
+            result = run_test(file, assemble_cmd, emulate_cmd, extensions)
+            if result is None:
+                continue
 
-        results[result] += 1
+            results[result] += 1
 
-        if quiet and result == "pass":
-            continue
+            if quiet and result == "pass":
+                continue
 
-        print(f"  {file:<50} {COLORS[result]}{result.upper()}\033[0m")
+            print(f"  {file:<50} {COLORS[result]}{result.upper()}\033[0m")
+
+    except KeyboardInterrupt:
+        print(f"\nKilled at {sum([results[k] for k in results])}/{len(files)}")
 
     total = sum([results[k] for k in results])
     print(f"\n{"".join([f"{results[k]} {k}ed, " for k in results])}{total} total")
