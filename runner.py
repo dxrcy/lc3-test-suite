@@ -2,8 +2,11 @@
 """
 LC-3 Test Suite Runner
 
-  ./runner.py [-q] CMD
-  ./runner.py [-q] ASSEMBLE_CMD EMULATE_CMD
+  ./runner.py [-q] [-e] CMD
+  ./runner.py [-q] [-e] ASSEMBLE_CMD EMULATE_CMD
+
+  -q = quiet mode, only output failures
+  -e = extension mode, run extension tests
 
   %s = source file
   %o = output file
@@ -33,8 +36,17 @@ def run_command(command: str) -> tuple[bool, int, str]:
 
 
 def run_test(
-    filepath: str, assemble_cmd: str, emulate_cmd: str | None
-) -> Literal["pass", "fail", "crash"]:
+    filepath: str, assemble_cmd: str, emulate_cmd: str | None, extensions: bool
+) -> Literal["pass", "fail", "crash"] | None:
+
+    basename = os.path.basename(filepath)
+
+    is_extension = "_extension" in basename
+    is_standard = "_standard" in basename
+    if not extensions and is_extension:
+        return None
+    if extensions and is_standard:
+        return None
 
     two_step = emulate_cmd is not None
 
@@ -54,19 +66,21 @@ def run_test(
         cmd = format_command(assemble_cmd, filepath, obj)
 
     crashed, return_code, output = run_command(cmd)
-    failed = (
-        crashed
-        or return_code != 0
-        or re.search(r"$error", output.lower())
-        or "exception" in output.lower()
-    )
 
     if os.path.exists(obj):
         os.remove(obj)
 
-    expect_asm_fail = "/1_syntax/" in filepath
+    output_lower = output.lower()
+    failed = (
+        crashed
+        or return_code != 0
+        or re.search(r"$error", output_lower)
+        or "exception" in output_lower
+    )
+
     expect_parse_only = "/0_parsing/" in filepath
-    expect_crash = filepath.endswith("_crash.asm")
+    expect_asm_fail = "/1_syntax/" in filepath
+    expect_crash = "_crash" in basename
     has_pass = "TEST_PASSED" in output
     has_fail = "TEST_FAILED" in output
 
@@ -97,21 +111,25 @@ def parse_args(args: list[str]) -> tuple[str, str | None, bool]:
     if quiet:
         args.remove("-q")
 
+    extensions = "-e" in args
+    if extensions:
+        args.remove("-e")
+
     if not args:
         print(__doc__.strip())
         sys.exit(1)
 
     if len(args) == 1:
-        return args[0], None, quiet
+        return args[0], None, quiet, extensions
     else:
-        return args[0], args[1] or None, quiet
+        return args[0], args[1] or None, quiet, extensions
 
 
 COLORS = {"pass": "\033[32m", "fail": "\033[31m", "crash": "\033[33m"}
 
 
 def main():
-    assemble_cmd, emulate_cmd, quiet = parse_args(sys.argv[1:])
+    assemble_cmd, emulate_cmd, quiet, extensions = parse_args(sys.argv[1:])
 
     files = sorted(glob.glob("tests/**/*.asm", recursive=True))
 
@@ -121,7 +139,10 @@ def main():
         if not os.path.isfile(file):
             continue
 
-        result = run_test(file, assemble_cmd, emulate_cmd)
+        result = run_test(file, assemble_cmd, emulate_cmd, extensions)
+        if result is None:
+            continue
+
         results[result] += 1
 
         if quiet and result == "pass":

@@ -8,9 +8,12 @@ emulators.
 `runner.py` takes one or two commands and runs all `tests/**/*.asm` files:
 
 ```sh
-./runner.py [-q] CMD
-./runner.py [-q] ASSEMBLE_CMD EMULATE_CMD
+./runner.py [-q] [-e] CMD
+./runner.py [-q] [-e] ASSEMBLE_CMD EMULATE_CMD
 ```
+
+The `-q` flag enables quiet mode which only outputs failures.
+The `-e` flag enables extension mode which runs extension tests.
 
 | Placeholder | Expands to                                           |
 | ----------- | ---------------------------------------------------- |
@@ -20,7 +23,7 @@ emulators.
 ### Examples
 
 ```sh
-./runner.py "elk %s --assemble --output %o" "elk %o --emulate"
+./runner.py "elk %s --assemble --output %o" "elk %o --emulate" -e
 ./runner.py "lace compile %s %o" "lace run %o" -q
 ./runner.py "lcc %s -o %o" "%o" -q
 ./runner.py "elk %s" -q
@@ -33,8 +36,10 @@ emulators.
 - Tests under `./tests/0_parsing/` only need to parse without crashing.
 - Tests under `./tests/1_syntax/` are expected to fail to assemble such as
   invalid syntax.
-- Tests named like `*_crash.asm` are expected to crash at runtime usually from
+- Tests named with `_crash` are expected to crash at runtime usually from
   ACV.
+- Tests named with `_extension` are only ran if `-e` flag is passed.
+- Tests named with `_standard` are not ran if `-e` flag is passed.
 - Tests must emit "TEST_PASSED" to pass.
 
 ## GitHub Actions
