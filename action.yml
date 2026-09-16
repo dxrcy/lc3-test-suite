@@ -12,6 +12,14 @@ inputs:
     description: "Run tests for extension features ('true' or 'false')"
     required: true
     default: "true"
+  timeout:
+    description: "Timeout for each test in seconds"
+    required: false
+    default: "30"
+  suppress:
+    description: "Suppress number of failing tests"
+    required: false
+    default: "0"
 
 runs:
   using: "composite"
@@ -31,4 +39,9 @@ runs:
       shell: bash
       run: |
         cd "$GITHUB_WORKSPACE/_lc3-test-suite"
-        python3 runner.py -q "${{ inputs.assemble }}" "${{ inputs.emulate && inputs.emulate || '' }}" "${{ inputs.extensions == 'true' && '-e' || '' }}"
+        python3 runner.py -q \
+          "${{ inputs.assemble }}" \
+          "${{ inputs.emulate && inputs.emulate || '' }}" \
+          "${{ inputs.extensions == 'true' && '-e' || '' }}" \
+          -t "${{ inputs.timeout }}" \
+          -s "${{ inputs.suppress }}"

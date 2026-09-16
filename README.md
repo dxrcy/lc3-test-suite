@@ -8,12 +8,14 @@ emulators.
 `runner.py` takes one or two commands and runs all `tests/**/*.asm` files:
 
 ```sh
-./runner.py [-q] [-e] CMD
-./runner.py [-q] [-e] ASSEMBLE_CMD EMULATE_CMD
+./runner.py [-q] [-e] [-t N] [-s N] CMD
+./runner.py [-q] [-e] [-t N] [-s N] ASSEMBLE_CMD EMULATE_CMD
 ```
 
 The `-q` flag enables quiet mode which only outputs failures.
 The `-e` flag enables extension mode which runs extension tests.
+The `-t` flag sets the timeout in seconds for each test (default: 30).
+The `-s` flag sets the number of failures to suppress/allow without exiting 1 (default: 0).
 
 | Placeholder | Expands to                                           |
 | ----------- | ---------------------------------------------------- |
@@ -25,8 +27,8 @@ The `-e` flag enables extension mode which runs extension tests.
 ```sh
 ./runner.py "elk %s --assemble --output %o" "elk %o --emulate" -e
 ./runner.py "lace compile %s %o" "lace run %o" -q
-./runner.py "lcc %s -o %o" "%o" -q
-./runner.py "elk %s" -q
+./runner.py "lcc %s -o %o" "%o" -q -s 15 -t 20
+./runner.py "elk %s" -q -t 5
 # test an assembler/parser without an emulator
 ./runner.py "laser -a %s" "echo TEST_PASSED && [[ '%s' == *_crash.asm ]] && return 1" -q
 ```
@@ -63,4 +65,6 @@ steps:
           assemble: "$GITHUB_WORKSPACE/zig-out/bin/elk %s --assemble --output %o"
           emulate: "$GITHUB_WORKSPACE/zig-out/bin/elk %o --emulate"
           extensions: "true"
+          timeout: "30"
+          suppress: "0"
 ```
