@@ -1,0 +1,8 @@
+.ORIG x3000
+
+    halt
+
+.FILL #65535
+.FILL #-32768
+
+.END
