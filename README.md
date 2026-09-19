@@ -8,12 +8,13 @@ emulators.
 `runner.py` takes one or two commands and runs all `tests/**/*.asm` files:
 
 ```sh
-./runner.py [-q] [-e] [-t N] [-s N] CMD
-./runner.py [-q] [-e] [-t N] [-s N] ASSEMBLE_CMD EMULATE_CMD
+./runner.py [-q] [-e] [-v] [-t N] [-s N] CMD
+./runner.py [-q] [-e] [-v] [-t N] [-s N] ASSEMBLE_CMD EMULATE_CMD
 ```
 
 The `-q` flag enables quiet mode which only outputs failures.
 The `-e` flag enables extension mode which runs extension tests.
+The `-v` flag enables verbose mode which prints each test output.
 The `-t` flag sets the timeout in seconds for each test (default: 30).
 The `-s` flag sets the number of failures to suppress/allow without exiting 1 (default: 0).
 

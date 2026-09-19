@@ -2,11 +2,12 @@
 """
 LC-3 Test Suite Runner
 
-  ./runner.py [-q] [-e] CMD
-  ./runner.py [-q] [-e] ASSEMBLE_CMD EMULATE_CMD
+  ./runner.py [-q] [-e] [-v] [-t N] [-s N] CMD
+  ./runner.py [-q] [-e] [-v] [-t N] [-s N] ASSEMBLE_CMD EMULATE_CMD
 
   -q = quiet mode, only output failures
   -e = extension mode, run extension tests
+  -v = verbose mode, print output of each test as it goes
   -t = timeout for test runtime
   -s = suppress N failures only exit 1 when over
 
@@ -32,6 +33,7 @@ class Config:
     extensions: bool
     timeout: int
     suppress: int
+    verbose: bool
 
 
 def format_command(command: str, source_file: str, object_file: str) -> str:
@@ -43,7 +45,12 @@ def run_command(command: str, config: Config) -> tuple[bool, int, str]:
         r = subprocess.run(
             command, shell=True, capture_output=True, text=True, timeout=config.timeout
         )
-        return False, r.returncode, r.stdout + r.stderr
+        output = r.stdout + r.stderr
+
+        if config.verbose:
+            print(output, end="" if output.endswith("\n") else "\n")
+
+        return False, r.returncode, output
     except Exception:
         return True, 1, ""
 
@@ -151,6 +158,7 @@ def parse_args(
     timeout = arg_with_value(args, "-t")
     suppress = arg_with_value(args, "-s")
     extensions = arg_flag(args, "-e")
+    verbose = arg_flag(args, "-v")
 
     if not args:
         print(__doc__.strip())
@@ -163,6 +171,7 @@ def parse_args(
         extensions=extensions,
         timeout=timeout if timeout is not None else 30,
         suppress=suppress if suppress is not None else 0,
+        verbose=verbose,
     )
 
 
