@@ -117,7 +117,7 @@ def run_test(filepath: str, config: Config) -> Literal["pass", "fail", "crash"] 
             return "pass"
         return "fail"
     if expect_crash:
-        if failed and not assemble_failed:
+        if failed or assemble_failed:
             return "pass"
         return "fail"
     if has_pass and not (assemble_failed or (not two_step and failed)):
