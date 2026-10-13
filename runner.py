@@ -43,7 +43,12 @@ def format_command(command: str, source_file: str, object_file: str) -> str:
 def run_command(command: str, config: Config) -> tuple[bool, int, str]:
     try:
         r = subprocess.run(
-            command, shell=True, capture_output=True, text=True, timeout=config.timeout
+            command,
+            shell=True,
+            capture_output=True,
+            text=True,
+            input="0\n" * 64,
+            timeout=config.timeout,
         )
         output = r.stdout + r.stderr
 
